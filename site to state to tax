@@ -1,0 +1,46 @@
+receipts = [
+    { "site_id": 1, "price": 27.00 },
+    { "site_id": 2, "price": 10.00 },
+    { "site_id": 1, "price": 11.00 },
+    { "site_id": 2, "price": 12.00 },
+    { "site_id": 3, "price": 13.00 },
+    { "site_id": 1, "price": 14.00 },
+]
+
+site_id_to_state = {
+    1: "California",
+    2: "Nevada",
+    3: "Nevada",
+}
+
+state_totals = {}
+for r in receipts:
+    site_id = r["site_id"]
+    state = site_id_to_state[site_id]
+    state_total = 0.0
+    if state in state_totals:
+        state_total = state_totals[state]
+    state_total = state_total + r["price"]
+    state_totals[state] = state_total
+
+print(state_totals)
+
+print(f" Total is {(state_totals)}")
+
+state_to_tax = {
+    "California": 0.1,
+    "Nevada": 0.08,
+}
+
+tax_totals = {}
+for r in receipts:
+    site_id = r["site_id"]
+    state = site_id_to_state[site_id]
+    tax = state_to_tax[state]
+    tax_total = 0.0
+    if state in tax_totals:
+        tax_total = tax_totals[state]
+    tax_total = tax_total + r["price"] * (1 + tax)
+    tax_totals[state] = tax_total
+
+print(tax_totals)
